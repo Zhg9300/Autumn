@@ -1,0 +1,5 @@
+*.txt
+.env
+.env.*
+supabase-service*
+service-role*

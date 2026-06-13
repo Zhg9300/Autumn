@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>秋招备考知识库</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#">
+          <span class="brand-mark">Q</span>
+          <span>
+            <strong>秋招知识库</strong>
+            <small>做题 · 复盘 · 同步</small>
+          </span>
+        </a>
+
+        <nav class="nav" id="subject-nav" aria-label="科目筛选">
+          <button class="nav-item active" data-filter="all" type="button">
+            <span>全部</span>
+            <strong>0</strong>
+          </button>
+        </nav>
+        <button class="add-subject" id="add-subject" type="button">
+          <span aria-hidden="true">+</span>
+          新增科目
+        </button>
+
+        <section class="panel compact">
+          <h2>整理节奏</h2>
+          <p>每张卡片保留一句核心解释，再用标签标出题型、语法或概念，复习时按关键词快速召回。</p>
+          <div class="meter" aria-label="今日整理进度">
+            <span style="width: 68%"></span>
+          </div>
+        </section>
+
+        <section class="panel compact">
+          <h2>字体大小</h2>
+          <label class="font-control">
+            <span><output id="font-size-output">16</output> px</span>
+            <input id="font-size-range" type="range" min="14" max="21" step="1" value="16" />
+          </label>
+        </section>
+      </aside>
+
+      <main class="main">
+        <section class="hero">
+          <img src="assets/study-hero.png" alt="秋招备考学习桌面" />
+          <div class="hero-copy">
+            <p class="eyebrow">Personal Prep System</p>
+            <h1>把零散积累变成可检索、可复盘、可同步的知识卡片。</h1>
+            <div class="hero-actions">
+              <button class="primary-action" id="add-note" type="button">
+                <span aria-hidden="true">+</span>
+                新增卡片
+              </button>
+              <button class="ghost-action" id="export-data" type="button">
+                <span aria-hidden="true">↓</span>
+                导出备份
+              </button>
+              <label class="ghost-action file-action">
+                <span aria-hidden="true">↑</span>
+                导入备份
+                <input id="import-data" type="file" accept="application/json" />
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="sync-card" aria-label="账号和同步">
+          <div class="sync-head">
+            <div>
+              <strong id="sync-title">正在检查同步状态</strong>
+              <p id="sync-detail">本地缓存可离线查看，登录后以云端数据为准。</p>
+            </div>
+            <span class="sync-indicator local" id="sync-indicator">本地</span>
+          </div>
+
+          <form class="auth-form" id="auth-form">
+            <label>
+              邮箱
+              <input id="auth-email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              密码
+              <input id="auth-password" type="password" autocomplete="current-password" minlength="6" required />
+            </label>
+            <div class="auth-actions">
+              <button class="primary-action" id="login-button" type="submit">登录</button>
+              <button class="ghost-action" id="signup-button" type="button">注册</button>
+            </div>
+          </form>
+
+          <div class="account-actions hidden" id="account-actions">
+            <span id="account-email"></span>
+            <button class="ghost-action hidden" id="migrate-data" type="button">上传本机数据到云端</button>
+            <button class="ghost-action" id="refresh-data" type="button">同步</button>
+            <button class="ghost-action" id="logout-button" type="button">退出</button>
+          </div>
+        </section>
+
+        <section class="toolbar" aria-label="检索工具">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="search-input" type="search" placeholder="搜索词语、概念、标签或解释" />
+          </label>
+          <select id="sort-select" aria-label="排序方式">
+            <option value="updated">最近更新</option>
+            <option value="subject">按科目</option>
+            <option value="title">按标题</option>
+          </select>
+        </section>
+
+        <section class="dashboard" aria-label="备考概览">
+          <article>
+            <span id="total-notes">0</span>
+            <p>知识卡片</p>
+          </article>
+          <article>
+            <span id="total-subjects">0</span>
+            <p>覆盖科目</p>
+          </article>
+          <article>
+            <span id="total-tags">0</span>
+            <p>标签索引</p>
+          </article>
+        </section>
+
+        <section class="notes-grid" id="notes-grid" aria-live="polite"></section>
+      </main>
+    </div>
+
+    <dialog id="note-dialog">
+      <form id="note-form">
+        <div class="dialog-head">
+          <h2 id="dialog-title">新增卡片</h2>
+          <button class="icon-button" data-close-dialog type="button" aria-label="关闭">×</button>
+        </div>
+        <input type="hidden" id="note-id" />
+        <label>
+          标题
+          <input id="note-title" required maxlength="60" />
+        </label>
+        <label>
+          科目
+          <select id="note-subject" required></select>
+        </label>
+        <label>
+          标签
+          <input id="note-tags" placeholder="用逗号分隔，例如：成语, 易混词" />
+        </label>
+        <label>
+          内容
+          <textarea id="note-body" required rows="7"></textarea>
+        </label>
+        <div class="dialog-actions">
+          <button class="ghost-action" data-close-dialog type="button">取消</button>
+          <button class="primary-action" id="save-note" type="submit">保存</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="subject-dialog">
+      <form id="subject-form">
+        <div class="dialog-head">
+          <h2>新增科目</h2>
+          <button class="icon-button" data-close-dialog type="button" aria-label="关闭">×</button>
+        </div>
+        <label>
+          科目名称
+          <input id="subject-name" required maxlength="30" placeholder="例如：数据结构、申论、面试" />
+        </label>
+        <div class="dialog-actions">
+          <button class="ghost-action" data-close-dialog type="button">取消</button>
+          <button class="primary-action" type="submit">保存科目</button>
+        </div>
+      </form>
+    </dialog>
+
+    <template id="empty-template">
+      <div class="empty-state">
+        <strong>没有匹配的卡片</strong>
+        <p>换个关键词，或新增一张卡片继续整理。</p>
+      </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
