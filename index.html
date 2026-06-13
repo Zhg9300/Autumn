@@ -168,6 +168,20 @@
       </form>
     </dialog>
 
+    <dialog id="detail-dialog">
+      <article class="detail-view">
+        <div class="dialog-head">
+          <div>
+            <span class="subject-pill" id="detail-subject"></span>
+            <h2 id="detail-title"></h2>
+          </div>
+          <button class="icon-button" data-close-dialog type="button" aria-label="关闭">×</button>
+        </div>
+        <p class="detail-body" id="detail-body"></p>
+        <div class="tags" id="detail-tags"></div>
+      </article>
+    </dialog>
+
     <template id="empty-template">
       <div class="empty-state">
         <strong>没有匹配的卡片</strong>

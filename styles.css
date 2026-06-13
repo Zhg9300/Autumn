@@ -426,16 +426,34 @@ select {
 }
 
 .notes-grid {
-  column-count: 4;
-  column-gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
 }
 
 .note-card {
-  display: inline-block;
-  width: 100%;
-  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 238px;
   padding: 14px;
-  break-inside: avoid;
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    transform 0.16s ease;
+}
+
+.note-card:hover,
+.note-card:focus-visible {
+  border-color: rgba(45, 107, 79, 0.45);
+  box-shadow: 0 10px 24px rgba(26, 42, 33, 0.08);
+  transform: translateY(-1px);
+}
+
+.note-card:focus-visible {
+  outline: 2px solid rgba(45, 107, 79, 0.25);
+  outline-offset: 2px;
 }
 
 .note-top {
@@ -446,9 +464,14 @@ select {
 }
 
 .note-card h3 {
+  min-width: 0;
   margin: 0;
   font-size: 18px;
   line-height: 1.35;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .subject-pill {
@@ -467,14 +490,20 @@ select {
   margin: 10px 0;
   color: #304037;
   line-height: 1.75;
-  white-space: pre-wrap;
+  white-space: pre-line;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 10px;
+  max-height: 58px;
+  margin-top: auto;
+  overflow: hidden;
 }
 
 .tags span {
@@ -486,6 +515,7 @@ select {
 }
 
 .card-actions {
+  flex: 0 0 auto;
   display: flex;
   gap: 6px;
 }
@@ -535,6 +565,39 @@ dialog::backdrop {
 #note-form,
 #subject-form {
   padding: 22px;
+}
+
+#detail-dialog {
+  width: min(780px, calc(100vw - 32px));
+}
+
+.detail-view {
+  padding: 22px;
+}
+
+.detail-view .dialog-head {
+  align-items: flex-start;
+}
+
+.detail-view h2 {
+  margin: 2px 0 0;
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.detail-body {
+  max-height: min(56vh, 560px);
+  margin: 18px 0;
+  overflow: auto;
+  color: #304037;
+  line-height: 1.85;
+  white-space: pre-wrap;
+}
+
+.detail-view .tags {
+  max-height: none;
+  margin-top: 0;
+  overflow: visible;
 }
 
 .dialog-head {
@@ -618,7 +681,7 @@ dialog::backdrop {
   }
 
   .notes-grid {
-    column-count: 2;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
 }
 
@@ -642,6 +705,6 @@ dialog::backdrop {
   }
 
   .notes-grid {
-    column-count: 1;
+    grid-template-columns: 1fr;
   }
 }

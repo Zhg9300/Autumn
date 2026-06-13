@@ -27,6 +27,11 @@ const searchInput = document.querySelector("#search-input");
 const sortSelect = document.querySelector("#sort-select");
 const dialog = document.querySelector("#note-dialog");
 const subjectDialog = document.querySelector("#subject-dialog");
+const detailDialog = document.querySelector("#detail-dialog");
+const detailSubject = document.querySelector("#detail-subject");
+const detailTitle = document.querySelector("#detail-title");
+const detailBody = document.querySelector("#detail-body");
+const detailTags = document.querySelector("#detail-tags");
 const form = document.querySelector("#note-form");
 const subjectForm = document.querySelector("#subject-form");
 const subjectNav = document.querySelector("#subject-nav");
@@ -412,6 +417,9 @@ function sortNotes(a, b) {
 function createCard(note) {
   const card = document.createElement("article");
   card.className = "note-card";
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", `查看「${note.title}」详情`);
   card.innerHTML = `
     <span class="subject-pill">${escapeHtml(note.subject)}</span>
     <div class="note-top">
@@ -425,9 +433,35 @@ function createCard(note) {
     <div class="tags">${note.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
   `;
 
-  card.querySelector('[data-action="edit"]').addEventListener("click", () => openEditor(note));
-  card.querySelector('[data-action="delete"]').addEventListener("click", () => deleteNote(note.id));
+  card.addEventListener("click", () => openDetail(note));
+  card.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    openDetail(note);
+  });
+
+  card.querySelector('[data-action="edit"]').addEventListener("click", (event) => {
+    event.stopPropagation();
+    openEditor(note);
+  });
+  card.querySelector('[data-action="delete"]').addEventListener("click", (event) => {
+    event.stopPropagation();
+    deleteNote(note.id);
+  });
   return card;
+}
+
+function openDetail(note) {
+  detailSubject.textContent = note.subject;
+  detailTitle.textContent = note.title;
+  detailBody.textContent = note.body;
+  detailTags.innerHTML = "";
+  note.tags.forEach((tag) => {
+    const item = document.createElement("span");
+    item.textContent = tag;
+    detailTags.append(item);
+  });
+  detailDialog.showModal();
 }
 
 function renderSubjects() {
