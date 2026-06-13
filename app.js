@@ -3,7 +3,7 @@ const LEGACY_SUBJECTS_KEY = "autumn-prep-subjects-v1";
 const LEGACY_SETTINGS_KEY = "autumn-prep-settings-v1";
 const CACHE_KEY = "autumn-prep-cloud-cache-v1";
 const DEFAULT_NOTE_SUBJECT = "未分类";
-const DEFAULT_HERO_IMAGE = "assets/study-hero.png";
+const DEFAULT_HERO_IMAGE = "assets/good-study.png";
 const DEFAULT_SETTINGS = {
   fontSize: 16,
   heroImageUrl: "",
