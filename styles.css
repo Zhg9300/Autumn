@@ -182,6 +182,63 @@ textarea:disabled {
   accent-color: var(--green);
 }
 
+.cover-control {
+  display: grid;
+  gap: 12px;
+}
+
+.cover-control label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cover-control input,
+.cover-control select {
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fbfcfa;
+}
+
+.cover-control input[type="range"] {
+  min-height: auto;
+  padding: 0;
+  accent-color: var(--green);
+}
+
+.upload-button,
+.mini-action {
+  justify-content: center;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--green-dark);
+  background: var(--surface);
+}
+
+.upload-button {
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.upload-button input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mini-action {
+  font-weight: 700;
+}
+
 .main {
   padding: 28px;
 }

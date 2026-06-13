@@ -43,11 +43,37 @@
             <input id="font-size-range" type="range" min="14" max="21" step="1" value="16" />
           </label>
         </section>
+
+        <section class="panel compact">
+          <h2>封面图片</h2>
+          <div class="cover-control">
+            <label>
+              图片 URL
+              <input id="hero-image-url" type="url" placeholder="https://example.com/image.jpg" />
+            </label>
+            <label class="upload-button">
+              上传本机图片
+              <input id="hero-image-upload" type="file" accept="image/*" />
+            </label>
+            <label>
+              高度 <span><output id="hero-height-output">330</output> px</span>
+              <input id="hero-height-range" type="range" min="240" max="560" step="10" value="330" />
+            </label>
+            <label>
+              显示方式
+              <select id="hero-fit-select">
+                <option value="cover">裁剪铺满</option>
+                <option value="contain">完整显示</option>
+              </select>
+            </label>
+            <button class="mini-action" id="reset-hero-image" type="button">恢复默认</button>
+          </div>
+        </section>
       </aside>
 
       <main class="main">
         <section class="hero">
-          <img src="assets/study-hero.png" alt="秋招备考学习桌面" />
+          <img id="hero-image" src="assets/study-hero.png" alt="秋招备考学习桌面" />
           <div class="hero-copy">
             <p class="eyebrow">Personal Prep System</p>
             <h1>把零散积累变成可检索、可复盘、可同步的知识卡片。</h1>

@@ -1,4 +1,5 @@
 *.txt
+autumn-prep-notes-*.json
 .env
 .env.*
 supabase-service*

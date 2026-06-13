@@ -24,9 +24,17 @@ create table if not exists public.subjects (
 create table if not exists public.user_settings (
   user_id uuid primary key references auth.users(id) on delete cascade,
   font_size integer not null default 16 check (font_size between 14 and 21),
+  hero_image_url text not null default '',
+  hero_height integer not null default 330 check (hero_height between 240 and 560),
+  hero_fit text not null default 'cover' check (hero_fit in ('cover', 'contain')),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.user_settings
+  add column if not exists hero_image_url text not null default '',
+  add column if not exists hero_height integer not null default 330 check (hero_height between 240 and 560),
+  add column if not exists hero_fit text not null default 'cover' check (hero_fit in ('cover', 'contain'));
 
 create or replace function public.set_updated_at()
 returns trigger
