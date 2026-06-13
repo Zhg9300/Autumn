@@ -40,24 +40,22 @@
       <main class="main">
         <section class="hero">
           <img id="hero-image" src="assets/goodstudy.png" alt="秋招备考学习桌面" />
-          <div class="hero-copy">
-            <p class="eyebrow">Personal Prep System</p>
-            <div class="hero-actions">
-              <button class="primary-action" id="add-note" type="button">
-                <span aria-hidden="true">+</span>
-                新增卡片
-              </button>
-              <button class="ghost-action" id="export-data" type="button">
-                <span aria-hidden="true">↓</span>
-                导出备份
-              </button>
-              <label class="ghost-action file-action">
-                <span aria-hidden="true">↑</span>
-                导入备份
-                <input id="import-data" type="file" accept="application/json" />
-              </label>
-            </div>
-          </div>
+        </section>
+
+        <section class="hero-toolbar" aria-label="常用操作">
+          <button class="primary-action" id="add-note" type="button">
+            <span aria-hidden="true">+</span>
+            新增卡片
+          </button>
+          <button class="ghost-action" id="export-data" type="button">
+            <span aria-hidden="true">↓</span>
+            导出备份
+          </button>
+          <label class="ghost-action file-action">
+            <span aria-hidden="true">↑</span>
+            导入备份
+            <input id="import-data" type="file" accept="application/json" />
+          </label>
         </section>
 
         <section class="sync-card" aria-label="账号和同步">

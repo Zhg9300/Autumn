@@ -66,3 +66,14 @@ window.PREP_SUPABASE_CONFIG = {
 
 - 想跨设备同步封面图：填写一个公开可访问的图片 URL。
 - 只想当前电脑使用：点击“上传本机图片”。这类图片只保存在当前浏览器，不会同步到另一台电脑。
+
+## 6. 页面排版速查
+
+常见排版调整位置都在 `styles.css`：
+
+- 左栏宽度：`.app-shell` 的 `grid-template-columns`
+- 主内容边距：`.main` 的 `padding`
+- 封面高度：`.hero` 的 `min-height`
+- 封面裁剪位置：`.hero img` 的 `object-position`
+- 卡片列数和间距：`.notes-grid` 的 `column-count` / `column-gap`
+- 卡片内边距：`.note-card` 的 `padding`

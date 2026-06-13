@@ -192,7 +192,7 @@ textarea:disabled {
   overflow: hidden;
   border-radius: 8px;
   background: #1f2d24;
-  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
 }
 
 .hero img {
@@ -201,29 +201,7 @@ textarea:disabled {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(16, 29, 23, 0.82), rgba(16, 29, 23, 0.36), rgba(16, 29, 23, 0.06));
-}
-
-.hero-copy {
-  position: relative;
-  z-index: 1;
-  max-width: 650px;
-  padding: 28px 32px;
-  color: #fff;
-}
-
-.eyebrow {
-  margin: 0 0 10px;
-  color: #d6e8d2;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
+  object-position: center 42%;
 }
 
 h1 {
@@ -233,11 +211,23 @@ h1 {
   letter-spacing: 0;
 }
 
-.hero-actions,
+.hero-toolbar,
 .dialog-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.hero-toolbar {
+  align-items: center;
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.dialog-actions {
   margin-top: 16px;
 }
 
@@ -618,14 +608,6 @@ dialog::backdrop {
     min-height: 260px;
   }
 
-  .hero::after {
-    background: linear-gradient(180deg, rgba(16, 29, 23, 0.78), rgba(16, 29, 23, 0.36));
-  }
-
-  .hero-copy {
-    padding: 24px;
-  }
-
   .toolbar,
   .dashboard {
     grid-template-columns: 1fr;
@@ -649,7 +631,7 @@ dialog::backdrop {
     font-size: 32px;
   }
 
-  .hero-actions {
+  .hero-toolbar {
     align-items: stretch;
     flex-direction: column;
   }
