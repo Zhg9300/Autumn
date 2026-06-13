@@ -3,12 +3,12 @@ const LEGACY_SUBJECTS_KEY = "autumn-prep-subjects-v1";
 const LEGACY_SETTINGS_KEY = "autumn-prep-settings-v1";
 const CACHE_KEY = "autumn-prep-cloud-cache-v1";
 const DEFAULT_NOTE_SUBJECT = "未分类";
-const DEFAULT_HERO_IMAGE = "assets/good-study.png";
+const DEFAULT_HERO_IMAGE = "assets/goodstudy.png";
 const DEFAULT_SETTINGS = {
   fontSize: 16,
   heroImageUrl: "",
   heroImageData: "",
-  heroHeight: 330,
+  heroHeight: 240,
   heroFit: "cover"
 };
 
@@ -50,12 +50,6 @@ const addSubjectButton = document.querySelector("#add-subject");
 const importDataInput = document.querySelector("#import-data");
 const hero = document.querySelector(".hero");
 const heroImage = document.querySelector("#hero-image");
-const heroImageUrlInput = document.querySelector("#hero-image-url");
-const heroImageUploadInput = document.querySelector("#hero-image-upload");
-const heroHeightRange = document.querySelector("#hero-height-range");
-const heroHeightOutput = document.querySelector("#hero-height-output");
-const heroFitSelect = document.querySelector("#hero-fit-select");
-const resetHeroImageButton = document.querySelector("#reset-hero-image");
 
 const supabaseConfig = window.PREP_SUPABASE_CONFIG || {};
 const supabaseClient = createSupabaseClient();
@@ -102,11 +96,6 @@ function bindEvents() {
     button.addEventListener("click", () => button.closest("dialog").close());
   });
   fontSizeRange.addEventListener("input", handleFontSizeInput);
-  heroImageUrlInput.addEventListener("input", handleHeroImageUrlInput);
-  heroImageUploadInput.addEventListener("change", handleHeroImageUpload);
-  heroHeightRange.addEventListener("input", handleHeroHeightInput);
-  heroFitSelect.addEventListener("change", handleHeroFitInput);
-  resetHeroImageButton.addEventListener("click", resetHeroSettings);
   heroImage.addEventListener("error", handleHeroImageError);
   searchInput.addEventListener("input", render);
   sortSelect.addEventListener("change", render);
@@ -662,69 +651,6 @@ function handleFontSizeInput() {
   scheduleSettingsSave("字体大小已保存到云端。");
 }
 
-function handleHeroImageUrlInput() {
-  settings.heroImageUrl = heroImageUrlInput.value.trim();
-  settings.heroImageData = "";
-  applyHeroSettings();
-  saveLocalCache();
-  scheduleSettingsSave("封面图片设置已保存到云端。");
-}
-
-function handleHeroImageUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  if (!file.type.startsWith("image/")) {
-    setSyncStatus("图片无效", "请选择图片文件。", "error");
-    event.target.value = "";
-    return;
-  }
-
-  if (file.size > 2 * 1024 * 1024) {
-    setSyncStatus("图片过大", "本机上传建议使用 2MB 以下图片。跨设备同步请使用图片 URL。", "error");
-    event.target.value = "";
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    settings.heroImageData = String(reader.result || "");
-    heroImageUrlInput.value = settings.heroImageUrl;
-    applyHeroSettings();
-    saveLocalCache();
-    setSyncStatus("本机封面已应用", "本机上传的图片只保存在当前浏览器；跨设备同步请使用图片 URL。", "local");
-  };
-  reader.onerror = () => {
-    setSyncStatus("读取图片失败", "请换一张图片再试。", "error");
-  };
-  reader.readAsDataURL(file);
-  event.target.value = "";
-}
-
-function handleHeroHeightInput() {
-  settings.heroHeight = clampHeroHeight(Number(heroHeightRange.value));
-  applyHeroSettings();
-  saveLocalCache();
-  scheduleSettingsSave("封面高度已保存到云端。");
-}
-
-function handleHeroFitInput() {
-  settings.heroFit = normalizeHeroFit(heroFitSelect.value);
-  applyHeroSettings();
-  saveLocalCache();
-  scheduleSettingsSave("封面显示方式已保存到云端。");
-}
-
-function resetHeroSettings() {
-  settings.heroImageUrl = "";
-  settings.heroImageData = "";
-  settings.heroHeight = DEFAULT_SETTINGS.heroHeight;
-  settings.heroFit = DEFAULT_SETTINGS.heroFit;
-  applyHeroSettings();
-  saveLocalCache();
-  scheduleSettingsSave("封面设置已恢复默认并保存到云端。");
-}
-
 function handleHeroImageError() {
   if (heroImage.dataset.fallback === "true") return;
   heroImage.dataset.fallback = "true";
@@ -870,14 +796,10 @@ function applyFontSize() {
 
 function applyHeroSettings() {
   settings = normalizeSettings(settings, settings);
-  hero.style.minHeight = `${settings.heroHeight}px`;
+  hero.style.minHeight = `${DEFAULT_SETTINGS.heroHeight}px`;
   heroImage.dataset.fallback = "false";
-  heroImage.src = settings.heroImageData || settings.heroImageUrl || DEFAULT_HERO_IMAGE;
-  heroImage.style.objectFit = settings.heroFit;
-  heroImageUrlInput.value = settings.heroImageUrl;
-  heroHeightRange.value = String(settings.heroHeight);
-  heroHeightOutput.value = String(settings.heroHeight);
-  heroFitSelect.value = settings.heroFit;
+  heroImage.src = DEFAULT_HERO_IMAGE;
+  heroImage.style.objectFit = DEFAULT_SETTINGS.heroFit;
 }
 
 function getErrorMessage(error) {
